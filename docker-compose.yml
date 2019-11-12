@@ -1,0 +1,19 @@
+version: '3.1'
+
+services:
+
+    discovery:
+        image: want2play-discovery
+        build: ../want2play-discovery/
+        ports:
+            - '8761:8761'
+
+    gateway:
+        image: want2play-gateway
+        build: ../want2play-gateway/   
+        depends_on:
+          - discovery
+        ports:
+            - '8080:8080'
+        restart: on-failure
+      

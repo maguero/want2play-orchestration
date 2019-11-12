@@ -1,2 +1,8 @@
-# want2play-orchestration
-This is the docker-compose orchestration project for entire Want2Play app
+# Want2Play Orchestration
+
+This is just a the docker-compose file with the configurations to build and run the entire Want2Play app.
+
+### Services
+
+* [want2play-discovery](https://github.com/maguero/want2play-discovery)
+* [want2play-gateway](https://github.com/maguero/want2play-gateway), that depends on want2play-discovery
