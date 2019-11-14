@@ -17,3 +17,12 @@ services:
             - '8080:8080'
         restart: on-failure
       
+    want2play:
+        image: want2play-core
+        build: ../want2play/
+        depends_on:
+            - discovery
+            - gateway
+        ports:
+          - '9001:9001'
+        restart: on-failure
