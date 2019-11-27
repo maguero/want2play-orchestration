@@ -16,6 +16,34 @@ services:
         ports:
             - '8080:8080'
         restart: on-failure
+
+    w2p-db:
+        image: mongo:latest
+        restart: on-failure
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=w2proot
+            - MONGO_INITDB_ROOT_PASSWORD=w4nt2pl4yr00t
+            - MONGO_INITDB_DATABASE=want2play
+        volumes:
+            #- w2p-mongo-data:/data/db
+            - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+        ports:
+            - 27017:27017
+
+    mongo-express:
+        image: mongo-express
+        restart: on-failure
+        depends_on:
+            - w2p-db
+        ports:
+            - 8081:8081
+        environment:
+            - ME_CONFIG_MONGODB_SERVER=w2p-db
+            - ME_CONFIG_MONGODB_PORT=27017
+            #- ME_CONFIG_BASICAUTH_USERNAME=want2play
+            #- ME_CONFIG_BASICAUTH_PASSWORD=4dm1n
+            - ME_CONFIG_MONGODB_ADMINUSERNAME=w2proot
+            - ME_CONFIG_MONGODB_ADMINPASSWORD=w4nt2pl4yr00t
       
     want2play:
         image: want2play-core
@@ -26,3 +54,7 @@ services:
         ports:
           - '9001:9001'
         restart: on-failure
+
+#volumes:
+#    w2p-mongo-data:
+#        name: want2play-mogoDB-data
